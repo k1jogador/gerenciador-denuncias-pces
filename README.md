@@ -1,2 +1,2 @@
 # gerenciador-denuncias-pces
-Código fonte do sistema gerenciados de denuncias da PCES.
+Código fonte do sistema gerenciador de denuncias da PCES.
