@@ -30,7 +30,7 @@ let DatabaseService = class DatabaseService {
             where: { matricula: matricula },
         });
         if (!usuario) {
-            throw new common_1.NotFoundException('Usuário não encontrado');
+            throw new common_1.NotFoundException('Registro não encontrado');
         }
         return usuario;
     }

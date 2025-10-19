@@ -15,22 +15,28 @@ const usuario_1 = require("./database/models/usuario");
 const perfil_1 = require("./database/models/perfil");
 const database_module_1 = require("./database/database.module");
 const auth_module_1 = require("./auth/auth.module");
+const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: 'shortline.proxy.rlwy.net',
-                port: 59874,
-                username: 'postgres',
-                password: 'yhZrYSxAYlSLzJQZraIbZpPRamPBDNgH',
-                database: 'railway',
-                entities: [usuario_1.Usuario, perfil_1.Perfil],
-                synchronize: true,
-                logging: true,
+            config_1.ConfigModule.forRoot({ isGlobal: true }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    type: 'postgres',
+                    host: configService.get('DB_HOST'),
+                    port: configService.get('DB_PORT'),
+                    username: configService.get('DB_USERNAME'),
+                    password: configService.get('DB_PASSWORD'),
+                    database: 'railway',
+                    entities: [usuario_1.Usuario, perfil_1.Perfil],
+                    synchronize: true,
+                    logging: true,
+                }),
             }),
             database_module_1.DatabaseModule,
             auth_module_1.AuthModule,

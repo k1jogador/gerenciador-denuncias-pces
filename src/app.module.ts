@@ -6,19 +6,25 @@ import { Usuario } from './database/models/usuario';
 import { Perfil } from './database/models/perfil';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'shortline.proxy.rlwy.net',
-      port: 59874,
-      username: 'postgres',
-      password: 'yhZrYSxAYlSLzJQZraIbZpPRamPBDNgH',
-      database: 'railway',
-      entities: [Usuario, Perfil],
-      synchronize: true,
-      logging: true,
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        database: 'railway',
+        entities: [Usuario, Perfil],
+        synchronize: true,
+        logging: true,
+      }),
     }),
     DatabaseModule,
     AuthModule,

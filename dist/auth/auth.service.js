@@ -26,7 +26,7 @@ let AuthService = class AuthService {
             throw new common_1.UnauthorizedException('Credenciais inválidas');
         }
         const result = {
-            id: user.id,
+            sub: user.id,
             nome: user.nome,
             email: user.email,
             matricula: user.matricula,
