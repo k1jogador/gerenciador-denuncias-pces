@@ -5,12 +5,12 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
-import { Perfil } from './perfil'; // Assumindo o caminho para a entidade Perfil
+import { Perfil } from './perfil';
 
 @Entity({ name: 'usuario' })
 export class Usuario {
   @PrimaryGeneratedColumn()
-  id: number | BigInt; // Chave primária auto-incrementada
+  id: number | BigInt;
 
   @Column({ length: 100 })
   nome: string;

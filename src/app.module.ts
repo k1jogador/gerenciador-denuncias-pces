@@ -7,7 +7,6 @@ import { Perfil } from './database/models/perfil';
 import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 
-// app.module.ts (Corrigido)
 @Module({
   imports: [
     TypeOrmModule.forRoot({
