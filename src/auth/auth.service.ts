@@ -18,7 +18,7 @@ export class AuthService {
       matricula
     );
 
-    if (user.senha_hash !== senha || !user == null) {
+    if (user.senha_hash !== senha || user == null) {
       throw new UnauthorizedException("Credenciais inválidas");
     }
     const result = {
