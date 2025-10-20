@@ -14,7 +14,8 @@ export class AuthService {
   ) {}
 
   async signIn(matricula: string, senha: string): Promise<any> {
-    const user = await this.databaseService.buscarPorMatricula(matricula);
+    const user =
+      await this.databaseService.buscarUsuarioPorMatricula(matricula);
 
     if (!user) {
       throw new NotFoundException('Registro não encontrado');

@@ -13,7 +13,9 @@ export class DatabaseService {
     private perfisRepository: Repository<Perfil>,
   ) {}
 
-  public async buscarPorMatricula(matricula: string): Promise<Usuario | null> {
+  public async buscarUsuarioPorMatricula(
+    matricula: string,
+  ): Promise<Usuario | null> {
     const usuario = await this.usuariosRepository.findOne({
       where: { matricula: matricula },
     });
