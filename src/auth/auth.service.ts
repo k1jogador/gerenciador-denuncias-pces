@@ -18,7 +18,10 @@ export class AuthService {
       matricula
     );
 
-    if (user.senha_hash !== senha || user == null) {
+    if (!user) {
+      throw new NotFoundException("Registro não encontrado");
+    }
+    if (user.senha_hash !== senha) {
       throw new UnauthorizedException("Credenciais inválidas");
     }
     const result = {
