@@ -29,9 +29,6 @@ let DatabaseService = class DatabaseService {
         const usuario = await this.usuariosRepository.findOne({
             where: { matricula: matricula },
         });
-        if (!usuario) {
-            throw new common_1.NotFoundException('Registro não encontrado');
-        }
         return usuario;
     }
 };

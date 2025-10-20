@@ -1,6 +1,10 @@
 import { JwtService } from '@nestjs/jwt';
 import { DatabaseService } from './../database/database.service';
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +16,9 @@ export class AuthService {
   async signIn(matricula: string, senha: string): Promise<any> {
     const user = await this.databaseService.buscarPorMatricula(matricula);
 
+    if (!user) {
+      throw new NotFoundException('Registro não encontrado');
+    }
     if (user.senha_hash !== senha) {
       throw new UnauthorizedException('Credenciais inválidas');
     }

@@ -13,14 +13,11 @@ export class DatabaseService {
     private perfisRepository: Repository<Perfil>,
   ) {}
 
-  public async buscarPorMatricula(matricula: string): Promise<Usuario> {
+  public async buscarPorMatricula(matricula: string): Promise<Usuario | null> {
     const usuario = await this.usuariosRepository.findOne({
       where: { matricula: matricula },
     });
 
-    if (!usuario) {
-      throw new NotFoundException('Registro não encontrado');
-    }
     return usuario;
   }
 }

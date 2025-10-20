@@ -22,6 +22,9 @@ let AuthService = class AuthService {
     }
     async signIn(matricula, senha) {
         const user = await this.databaseService.buscarPorMatricula(matricula);
+        if (!user) {
+            throw new common_1.NotFoundException('Registro não encontrado');
+        }
         if (user.senha_hash !== senha) {
             throw new common_1.UnauthorizedException('Credenciais inválidas');
         }
