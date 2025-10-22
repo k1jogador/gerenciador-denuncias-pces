@@ -21,7 +21,7 @@ let AuthService = class AuthService {
         this.jwtService = jwtService;
     }
     async signIn(matricula, senha) {
-        const user = await this.databaseService.buscarPorMatricula(matricula);
+        const user = await this.databaseService.buscarUsuarioPorMatricula(matricula);
         if (!user) {
             throw new common_1.NotFoundException('Registro não encontrado');
         }

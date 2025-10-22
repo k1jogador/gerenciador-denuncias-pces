@@ -25,7 +25,7 @@ let DatabaseService = class DatabaseService {
         this.usuariosRepository = usuariosRepository;
         this.perfisRepository = perfisRepository;
     }
-    async buscarPorMatricula(matricula) {
+    async buscarUsuarioPorMatricula(matricula) {
         const usuario = await this.usuariosRepository.findOne({
             where: { matricula: matricula },
         });

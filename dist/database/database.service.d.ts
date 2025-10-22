@@ -5,5 +5,5 @@ export declare class DatabaseService {
     private usuariosRepository;
     private perfisRepository;
     constructor(usuariosRepository: Repository<Usuario>, perfisRepository: Repository<Perfil>);
-    buscarPorMatricula(matricula: string): Promise<Usuario | null>;
+    buscarUsuarioPorMatricula(matricula: string): Promise<Usuario | null>;
 }
