@@ -22,7 +22,7 @@ export class AuthService {
       throw new UnauthorizedException("Não autorizado");
     }
     if (user.senha_hash !== senha) {
-      throw new UnauthorizedException("Não autorizado");
+      throw new UnauthorizedException("Não autorizado ");
     }
     const result = {
       sub: user.id,
