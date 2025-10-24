@@ -1,28 +1,23 @@
-import { JwtService } from "@nestjs/jwt";
-import { DatabaseService } from "./../database/database.service";
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common";
+import { JwtService } from '@nestjs/jwt';
+import { DatabaseService } from './../database/database.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
   constructor(
     private databaseService: DatabaseService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
   ) {}
 
   async signIn(matricula: string, senha: string): Promise<any> {
-    const user = await this.databaseService.buscarUsuarioPorMatricula(
-      matricula
-    );
+    const user =
+      await this.databaseService.buscarUsuarioPorMatricula(matricula);
 
     if (!user) {
-      throw new UnauthorizedException("Não autorizado");
+      throw new UnauthorizedException('Não autorizado');
     }
     if (user.senha_hash !== senha) {
-      throw new UnauthorizedException("Não autorizado ");
+      throw new UnauthorizedException('Não autorizado ');
     }
     const result = {
       sub: user.id,

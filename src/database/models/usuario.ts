@@ -10,7 +10,7 @@ import { Perfil } from './perfil';
 @Entity({ name: 'usuario' })
 export class Usuario {
   @PrimaryGeneratedColumn()
-  id: number | BigInt;
+  id: number | bigint;
 
   @Column({ length: 100 })
   nome: string;
