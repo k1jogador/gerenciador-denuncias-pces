@@ -23,10 +23,10 @@ let AuthService = class AuthService {
     async signIn(matricula, senha) {
         const user = await this.databaseService.buscarUsuarioPorMatricula(matricula);
         if (!user) {
-            throw new common_1.UnauthorizedException("Não autorizado");
+            throw new common_1.UnauthorizedException('Não autorizado');
         }
         if (user.senha_hash !== senha) {
-            throw new common_1.UnauthorizedException("Não autorizado ");
+            throw new common_1.UnauthorizedException('Não autorizado ');
         }
         const result = {
             sub: user.id,

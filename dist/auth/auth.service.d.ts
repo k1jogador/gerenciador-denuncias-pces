@@ -1,5 +1,5 @@
-import { JwtService } from "@nestjs/jwt";
-import { DatabaseService } from "./../database/database.service";
+import { JwtService } from '@nestjs/jwt';
+import { DatabaseService } from './../database/database.service';
 export declare class AuthService {
     private databaseService;
     private jwtService;
