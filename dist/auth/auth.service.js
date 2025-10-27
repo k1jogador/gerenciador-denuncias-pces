@@ -59,8 +59,9 @@ let AuthService = class AuthService {
         if (!user) {
             throw new common_1.UnauthorizedException('Não autorizado');
         }
-        if (user.senha_hash !== senha) {
-            throw new common_1.UnauthorizedException('Não autorizado ');
+        const isPasswordValid = await bcrypt.compare(senha, user.senha_hash);
+        if (!isPasswordValid) {
+            throw new common_1.UnauthorizedException('Não autorizado');
         }
         const result = {
             sub: user.id,

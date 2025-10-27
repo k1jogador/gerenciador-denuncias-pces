@@ -17,9 +17,13 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('Não autorizado');
     }
-    if (user.senha_hash !== senha) {
-      throw new UnauthorizedException('Não autorizado ');
+
+    // Adicionei para comparar senha com o hash da senha usando o bcrypt
+    const isPasswordValid = await bcrypt.compare(senha, user.senha_hash);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Não autorizado');
     }
+
     const result = {
       sub: user.id,
       nome: user.nome,
