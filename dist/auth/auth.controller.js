@@ -23,6 +23,9 @@ let AuthController = class AuthController {
     async signIn(signIn) {
         return this.authService.signIn(signIn.matricula, signIn.senha);
     }
+    async signUp(signUp) {
+        return this.authService.signUp(signUp.nome, signUp.email, signUp.matricula, signUp.senha, signUp.dataNascimento);
+    }
 };
 exports.AuthController = AuthController;
 __decorate([
@@ -33,6 +36,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "signIn", null);
+__decorate([
+    (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
+    (0, common_1.Post)('signup'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AuthController.prototype, "signUp", null);
 exports.AuthController = AuthController = __decorate([
     (0, common_1.Controller)('auth'),
     __metadata("design:paramtypes", [auth_service_1.AuthService])

@@ -27,6 +27,9 @@ export class Usuario {
   @Column({ name: 'id_perfil' })
   id_perfil: number;
 
+  @Column({ nullable: true }) 
+  data_nascimento: number;
+
   @ManyToOne(() => Perfil)
   @JoinColumn({ name: 'id_perfil', referencedColumnName: 'id' })
   perfil: Perfil;

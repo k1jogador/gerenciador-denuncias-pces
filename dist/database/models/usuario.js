@@ -19,6 +19,7 @@ let Usuario = class Usuario {
     matricula;
     senha_hash;
     id_perfil;
+    data_nascimento;
     perfil;
 };
 exports.Usuario = Usuario;
@@ -46,6 +47,10 @@ __decorate([
     (0, typeorm_1.Column)({ name: 'id_perfil' }),
     __metadata("design:type", Number)
 ], Usuario.prototype, "id_perfil", void 0);
+__decorate([
+    (0, typeorm_1.Column)({ nullable: true }),
+    __metadata("design:type", Number)
+], Usuario.prototype, "data_nascimento", void 0);
 __decorate([
     (0, typeorm_1.ManyToOne)(() => perfil_1.Perfil),
     (0, typeorm_1.JoinColumn)({ name: 'id_perfil', referencedColumnName: 'id' }),

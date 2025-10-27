@@ -5,4 +5,5 @@ export declare class AuthService {
     private jwtService;
     constructor(databaseService: DatabaseService, jwtService: JwtService);
     signIn(matricula: string, senha: string): Promise<any>;
+    signUp(nome: string, email: string, matricula: string, senha: string, dataNascimento: number): Promise<any>;
 }
