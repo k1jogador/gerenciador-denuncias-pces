@@ -34,11 +34,11 @@ export class AuthService {
 
   // Sistema de Cadastro 
   async signUp(
-    email: string, senha: string, nome: string, matricula: string, id_perfil: number
+    email: string, senha: string, nome: string, matricula: string,
   ): Promise<any>{
 
     // Verificar se todos os campos foram devidamente preenchidos 
-    if (!email || !senha || !nome || !matricula || !id_perfil) {
+    if (!email || !senha || !nome || !matricula) {
       throw new BadRequestException('Todos os campos são obrigatórios');
     }
 
@@ -64,7 +64,6 @@ export class AuthService {
       senha_hash: hashedPassword,
       nome,
       matricula,
-      id_perfil,
     });
 
     // Gera o token JWT similar ao signIn

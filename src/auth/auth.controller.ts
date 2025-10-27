@@ -21,7 +21,6 @@ export class AuthController {
       signUp.senha,
       signUp.nome,
       signUp.matricula,
-      signUp.id_perfil
     );
   }
 }
