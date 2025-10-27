@@ -4,4 +4,5 @@ export interface signUp{
     senha: string;
     dataNascimento: number;
     matricula: string;
+    id_perfil:number;
 }

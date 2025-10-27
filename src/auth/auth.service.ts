@@ -34,17 +34,14 @@ export class AuthService {
 
   // Sistema de Cadastro 
   async signUp(
-    email: string, senha: string, nome: string, matricula: string,
+    email: string, senha: string, nome: string, matricula: string, id_perfil: number
   ): Promise<any>{
-
-    // Verificar se todos os campos foram devidamente preenchidos 
-    if (!email || !senha || !nome || !matricula) {
+    if (!email || !senha || !nome || !matricula || !id_perfil) {
       throw new BadRequestException('Todos os campos são obrigatórios');
     }
 
     const emailExistente = await this.databaseService.buscarUsuarioPorEmail(email);
 
-    // Verifica se já existe o email logado no banco de dados
     if (emailExistente) {
       throw new UnauthorizedException('Já existe uma conta linkada a este email');
     }

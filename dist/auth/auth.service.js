@@ -91,7 +91,6 @@ let AuthService = class AuthService {
             senha_hash: hashedPassword,
             nome,
             matricula,
-            id_perfil,
         });
         const result = {
             sub: newUser.id,
