@@ -26,9 +26,6 @@ export class AuthService {
 
     const result = {
       sub: user.id,
-      nome: user.nome,
-      email: user.email,
-      matricula: user.matricula,
       id_perfil: user.id_perfil,
     };
     return {
