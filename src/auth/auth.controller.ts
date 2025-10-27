@@ -8,7 +8,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('login')
+  @Post('signin')
   async signIn(@Body() signIn: SignIn) {
     return this.authService.signIn(signIn.matricula, signIn.senha);
   }

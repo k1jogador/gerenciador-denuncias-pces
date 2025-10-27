@@ -1,3 +1,4 @@
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { DatabaseService } from './../database/database.service';
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
@@ -10,16 +11,14 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
+
+  // Sistema de login
   async signIn(matricula: string, senha: string): Promise<any> {
     const user =
       await this.databaseService.buscarUsuarioPorMatricula(matricula);
 
-    if (!user) {
-      throw new UnauthorizedException('Não autorizado');
-    }
-
     // Adicionei para comparar senha com o hash da senha usando o bcrypt
-    const isPasswordValid = await bcrypt.compare(senha, user.senha_hash);
+    const isPasswordValid = await bcrypt.compare(senha, user ? user.senha_hash : ConfigService.get('HASH_DUMMY'));
     if (!isPasswordValid) {
       throw new UnauthorizedException('Não autorizado');
     }
