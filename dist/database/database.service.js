@@ -31,6 +31,16 @@ let DatabaseService = class DatabaseService {
         });
         return usuario;
     }
+    async buscarUsuarioPorEmail(email) {
+        const emailUsuario = await this.usuariosRepository.findOne({
+            where: { email: email }
+        });
+        return emailUsuario;
+    }
+    async criarUsuario(usuarioData) {
+        const novoUsuario = this.usuariosRepository.create(usuarioData);
+        return await this.usuariosRepository.save(novoUsuario);
+    }
 };
 exports.DatabaseService = DatabaseService;
 exports.DatabaseService = DatabaseService = __decorate([

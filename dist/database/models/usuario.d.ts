@@ -1,6 +1,6 @@
 import { Perfil } from './perfil';
 export declare class Usuario {
-    id: number | BigInt;
+    id: number | bigint;
     nome: string;
     email: string;
     matricula: string;
