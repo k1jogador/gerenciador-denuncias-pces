@@ -34,19 +34,19 @@ export class AuthService {
 
   // Sistema de Cadastro 
   async signUp(
-    email: string, senha: string, nome: string, matricula: string, id_perfil: number
+    nome: string, email: string, matricula: string, senha: string, dataNascimento: number,
   ): Promise<any>{
-    if (!email || !senha || !nome || !matricula || !id_perfil) {
+    if (!nome || !email || !matricula|| !senha || !dataNascimento) {
       throw new BadRequestException('Todos os campos são obrigatórios');
     }
 
+    // Chega se email já existe no banco de dados
     const emailExistente = await this.databaseService.buscarUsuarioPorEmail(email);
-
     if (emailExistente) {
       throw new UnauthorizedException('Já existe uma conta linkada a este email');
     }
 
-    // Checa se matrícula já existe 
+    // Checa se matrícula já existe no banco de dados
     const matriculaExistente = await this.databaseService.buscarUsuarioPorMatricula(matricula);
     if (matriculaExistente) {
       throw new UnauthorizedException('Já existe uma conta linkada a esta matrícula');
@@ -61,6 +61,7 @@ export class AuthService {
       senha_hash: hashedPassword,
       nome,
       matricula,
+      data_nascimento: dataNascimento,
     });
 
     // Gera o token JWT similar ao signIn

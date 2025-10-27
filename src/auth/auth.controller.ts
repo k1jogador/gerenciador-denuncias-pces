@@ -17,11 +17,11 @@ export class AuthController {
   @Post('signup') 
   async signUp(@Body() signUp: signUp) {
     return this.authService.signUp(
-      signUp.email,
-      signUp.senha,
       signUp.nome,
+      signUp.email,
       signUp.matricula,
-      signUp.id_perfil
+      signUp.senha,
+      signUp.dataNascimento,
     );
   }
 }

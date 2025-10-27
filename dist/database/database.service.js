@@ -38,7 +38,11 @@ let DatabaseService = class DatabaseService {
         return emailUsuario;
     }
     async criarUsuario(usuarioData) {
-        const novoUsuario = this.usuariosRepository.create(usuarioData);
+        const dataComDefault = {
+            ...usuarioData,
+            id_perfil: usuarioData.id_perfil || 1,
+        };
+        const novoUsuario = this.usuariosRepository.create(dataComDefault);
         return await this.usuariosRepository.save(novoUsuario);
     }
 };

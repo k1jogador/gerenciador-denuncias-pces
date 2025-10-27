@@ -6,5 +6,6 @@ export declare class Usuario {
     matricula: string;
     senha_hash: string;
     id_perfil: number;
+    data_nascimento: number;
     perfil: Perfil;
 }

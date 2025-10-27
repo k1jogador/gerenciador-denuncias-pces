@@ -73,8 +73,8 @@ let AuthService = class AuthService {
             access_token: await this.jwtService.signAsync(result),
         };
     }
-    async signUp(email, senha, nome, matricula, id_perfil) {
-        if (!email || !senha || !nome || !matricula || !id_perfil) {
+    async signUp(nome, email, matricula, senha, dataNascimento) {
+        if (!nome || !email || !matricula || !senha || !dataNascimento) {
             throw new common_1.BadRequestException('Todos os campos são obrigatórios');
         }
         const emailExistente = await this.databaseService.buscarUsuarioPorEmail(email);
@@ -91,6 +91,7 @@ let AuthService = class AuthService {
             senha_hash: hashedPassword,
             nome,
             matricula,
+            data_nascimento: dataNascimento,
         });
         const result = {
             sub: newUser.id,

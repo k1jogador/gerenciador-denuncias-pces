@@ -24,7 +24,7 @@ let AuthController = class AuthController {
         return this.authService.signIn(signIn.matricula, signIn.senha);
     }
     async signUp(signUp) {
-        return this.authService.signUp(signUp.email, signUp.senha, signUp.nome, signUp.matricula, signUp.id_perfil);
+        return this.authService.signUp(signUp.nome, signUp.email, signUp.matricula, signUp.senha, signUp.dataNascimento);
     }
 };
 exports.AuthController = AuthController;
