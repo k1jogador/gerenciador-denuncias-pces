@@ -1,7 +1,11 @@
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { DatabaseService } from './../database/database.service';
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
@@ -11,15 +15,19 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-
   // Sistema de login
   async signIn(matricula: string, senha: string): Promise<any> {
     const user =
       await this.databaseService.buscarUsuarioPorMatricula(matricula);
 
     // Adicionei para comparar senha com o hash da senha usando o bcrypt
-    const isPasswordValid = await bcrypt.compare(senha, user ? user.senha_hash : ConfigService.get('HASH_DUMMY'));
-    if (!isPasswordValid) {
+    const isPasswordValid = await bcrypt.compare(
+      senha,
+      user
+        ? user.senha_hash
+        : '$2b$10$J8Ic/U6L4S2Bh0OeejhGyeCRX66oLuafG36UzTURFYuwZefJyPN0C',
+    );
+    if (!isPasswordValid || !user) {
       throw new UnauthorizedException('Não autorizado');
     }
 
@@ -32,24 +40,34 @@ export class AuthService {
     };
   }
 
-  // Sistema de Cadastro 
+  // Sistema de Cadastro
   async signUp(
-    nome: string, email: string, matricula: string, senha: string, dataNascimento: number,
-  ): Promise<any>{
-    if (!nome || !email || !matricula|| !senha || !dataNascimento) {
+    nome: string,
+    email: string,
+    matricula: string,
+    senha: string,
+    dataNascimento: number,
+  ): Promise<any> {
+    if (!nome || !email || !matricula || !senha || !dataNascimento) {
       throw new BadRequestException('Todos os campos são obrigatórios');
     }
 
     // Chega se email já existe no banco de dados
-    const emailExistente = await this.databaseService.buscarUsuarioPorEmail(email);
+    const emailExistente =
+      await this.databaseService.buscarUsuarioPorEmail(email);
     if (emailExistente) {
-      throw new UnauthorizedException('Já existe uma conta linkada a este email');
+      throw new UnauthorizedException(
+        'Já existe uma conta linkada a este email',
+      );
     }
 
     // Checa se matrícula já existe no banco de dados
-    const matriculaExistente = await this.databaseService.buscarUsuarioPorMatricula(matricula);
+    const matriculaExistente =
+      await this.databaseService.buscarUsuarioPorMatricula(matricula);
     if (matriculaExistente) {
-      throw new UnauthorizedException('Já existe uma conta linkada a esta matrícula');
+      throw new UnauthorizedException(
+        'Já existe uma conta linkada a esta matrícula',
+      );
     }
 
     // Hash da senha com bcrypt
@@ -78,6 +96,3 @@ export class AuthService {
     };
   }
 }
-
-
-

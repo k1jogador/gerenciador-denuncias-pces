@@ -56,18 +56,14 @@ let AuthService = class AuthService {
     }
     async signIn(matricula, senha) {
         const user = await this.databaseService.buscarUsuarioPorMatricula(matricula);
-        if (!user) {
-            throw new common_1.UnauthorizedException('Não autorizado');
-        }
-        const isPasswordValid = await bcrypt.compare(senha, user.senha_hash);
-        if (!isPasswordValid) {
+        const isPasswordValid = await bcrypt.compare(senha, user
+            ? user.senha_hash
+            : '$2b$10$J8Ic/U6L4S2Bh0OeejhGyeCRX66oLuafG36UzTURFYuwZefJyPN0C');
+        if (!isPasswordValid || !user) {
             throw new common_1.UnauthorizedException('Não autorizado');
         }
         const result = {
             sub: user.id,
-            nome: user.nome,
-            email: user.email,
-            matricula: user.matricula,
             id_perfil: user.id_perfil,
         };
         return {
