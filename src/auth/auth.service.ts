@@ -1,6 +1,5 @@
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { DatabaseService } from './../database/database.service';
+import { UsuarioService } from '../usuarios/usuario.service';
 import {
   BadRequestException,
   Injectable,
@@ -11,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthService {
   constructor(
-    private databaseService: DatabaseService,
+    private databaseService: UsuarioService,
     private jwtService: JwtService,
   ) {}
 
@@ -20,20 +19,19 @@ export class AuthService {
     const user =
       await this.databaseService.buscarUsuarioPorMatricula(matricula);
 
-    // Adicionei para comparar senha com o hash da senha usando o bcrypt
-    const isPasswordValid = await bcrypt.compare(
+    const matchPass = await bcrypt.compare(
       senha,
       user
         ? user.senha_hash
         : '$2b$10$J8Ic/U6L4S2Bh0OeejhGyeCRX66oLuafG36UzTURFYuwZefJyPN0C',
     );
-    if (!isPasswordValid || !user) {
-      throw new UnauthorizedException('Não autorizado');
+    if (!matchPass || !user) {
+      throw new UnauthorizedException();
     }
 
     const result = {
       sub: user.id,
-      id_perfil: user.id_perfil,
+      role: await this.databaseService.buscarPerfilPorId(user.id_perfil),
     };
     return {
       access_token: await this.jwtService.signAsync(result),

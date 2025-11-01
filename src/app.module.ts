@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Usuario } from './database/models/usuario';
-import { Perfil } from './database/models/perfil';
-import { DatabaseModule } from './database/database.module';
+import { Usuario } from './usuarios/usuario.entity';
+import { Perfil } from './perfis/perfil.entity';
+import { UsuarioModule } from './usuarios/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
@@ -26,7 +26,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
         logging: true,
       }),
     }),
-    DatabaseModule,
+    UsuarioModule,
     AuthModule,
   ],
   controllers: [AppController],

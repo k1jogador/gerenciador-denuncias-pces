@@ -15,6 +15,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const common_1 = require("@nestjs/common");
 const auth_service_1 = require("./auth.service");
+const auth_guard_1 = require("./guards/auth.guard");
+const roles_guard_1 = require("./guards/roles.guard");
+const role_enum_1 = require("../enums/role.enum");
+const roles_decorator_1 = require("./decorators/roles.decorator");
 let AuthController = class AuthController {
     authService;
     constructor(authService) {
@@ -39,6 +43,8 @@ __decorate([
 __decorate([
     (0, common_1.HttpCode)(common_1.HttpStatus.CREATED),
     (0, common_1.Post)('signup'),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard, roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Admin),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

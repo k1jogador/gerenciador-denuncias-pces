@@ -1,0 +1,36 @@
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Perfil } from '../perfis/perfil.entity';
+
+@Entity({ name: 'usuario' })
+export class Usuario {
+  @PrimaryGeneratedColumn()
+  id: number | bigint;
+
+  @Column({ length: 100 })
+  nome: string;
+
+  @Column({ length: 255, unique: true })
+  email: string;
+
+  @Column({ length: 20, unique: true })
+  matricula: string;
+
+  @Column({ length: 255 })
+  senha_hash: string;
+
+  @Column({ name: 'id_perfil' })
+  id_perfil: number;
+
+  @Column({ nullable: true })
+  data_nascimento: number;
+
+  @ManyToOne(() => Perfil)
+  @JoinColumn({ name: 'id_perfil', referencedColumnName: 'id' })
+  perfil: Perfil;
+}

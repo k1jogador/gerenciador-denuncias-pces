@@ -44,7 +44,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const jwt_1 = require("@nestjs/jwt");
-const database_service_1 = require("./../database/database.service");
+const usuario_service_1 = require("../usuarios/usuario.service");
 const common_1 = require("@nestjs/common");
 const bcrypt = __importStar(require("bcrypt"));
 let AuthService = class AuthService {
@@ -56,15 +56,15 @@ let AuthService = class AuthService {
     }
     async signIn(matricula, senha) {
         const user = await this.databaseService.buscarUsuarioPorMatricula(matricula);
-        const isPasswordValid = await bcrypt.compare(senha, user
+        const matchPass = await bcrypt.compare(senha, user
             ? user.senha_hash
             : '$2b$10$J8Ic/U6L4S2Bh0OeejhGyeCRX66oLuafG36UzTURFYuwZefJyPN0C');
-        if (!isPasswordValid || !user) {
-            throw new common_1.UnauthorizedException('Não autorizado');
+        if (!matchPass || !user) {
+            throw new common_1.UnauthorizedException();
         }
         const result = {
             sub: user.id,
-            id_perfil: user.id_perfil,
+            role: await this.databaseService.buscarPerfilPorId(user.id_perfil),
         };
         return {
             access_token: await this.jwtService.signAsync(result),
@@ -105,7 +105,7 @@ let AuthService = class AuthService {
 exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
-    __metadata("design:paramtypes", [database_service_1.DatabaseService,
+    __metadata("design:paramtypes", [usuario_service_1.UsuarioService,
         jwt_1.JwtService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

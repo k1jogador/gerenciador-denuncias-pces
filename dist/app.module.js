@@ -11,9 +11,9 @@ const common_1 = require("@nestjs/common");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const usuario_1 = require("./database/models/usuario");
-const perfil_1 = require("./database/models/perfil");
-const database_module_1 = require("./database/database.module");
+const usuario_entity_1 = require("./usuarios/usuario.entity");
+const perfil_entity_1 = require("./perfis/perfil.entity");
+const usuario_module_1 = require("./usuarios/usuario.module");
 const auth_module_1 = require("./auth/auth.module");
 const config_1 = require("@nestjs/config");
 let AppModule = class AppModule {
@@ -33,12 +33,12 @@ exports.AppModule = AppModule = __decorate([
                     username: configService.get('DB_USERNAME'),
                     password: configService.get('DB_PASSWORD'),
                     database: 'railway',
-                    entities: [usuario_1.Usuario, perfil_1.Perfil],
+                    entities: [usuario_entity_1.Usuario, perfil_entity_1.Perfil],
                     synchronize: true,
                     logging: true,
                 }),
             }),
-            database_module_1.DatabaseModule,
+            usuario_module_1.UsuarioModule,
             auth_module_1.AuthModule,
         ],
         controllers: [app_controller_1.AppController],
